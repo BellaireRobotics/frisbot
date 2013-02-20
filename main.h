@@ -2,6 +2,7 @@
 #define _MAIN_H
 
 #include "WPILib.h"
+//#include "vision_const.h"
 
 /*
 #include "IterativeRobot.h"
@@ -21,12 +22,11 @@ class FrisBot : public IterativeRobot {
   Joystick *ljoy;
   Joystick *rjoy;
 
-  SmartDashboard *dash;
-
   Victor *shooter;
+  Jaguar *feeder;
+  Jaguar *tilter;
 
-  Relay *tilter;
-  Relay *feeder;
+  SmartDashboard *dash;
 
   float shooter_speed;
 

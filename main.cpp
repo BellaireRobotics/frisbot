@@ -6,9 +6,8 @@ FrisBot::FrisBot(void) {
   rjoy = new Joystick(2); // right joystick
 
   shooter = new Victor(4);
-
-  tilter = new Relay(1);
-  feeder = new Relay(2);
+  feeder = new Jaguar(5);
+  tilter = new Jaguar(6);
 }
 
 void FrisBot::RobotInit(void) {
@@ -57,28 +56,26 @@ void FrisBot::TeleopPeriodic(void) {
 
   // Tilt
   if (ljoy->GetRawButton(3)) {
-    tilter->Set(Relay::kReverse);
+    tilter->Set(1.0);
   } else if (ljoy->GetRawButton(2)) {
-    tilter->Set(Relay::kForward);
+    tilter->Set(-1.0);
   } else {
-    tilter->Set(Relay::kOff);
+    tilter->Set(0.0);
   }
 
   // Feeder
-  if (rjoy->GetTrigger()) {
-    feeder->Set(Relay::kForward);
-    Wait(0.17);
-    feeder->Set(Relay::kOff);
-    while (rjoy->GetTrigger())
-      Wait(0.0001);
-  } else if (ljoy->GetTrigger()) {
-    feeder->Set(Relay::kReverse);
-    Wait(0.1);
-    feeder->Set(Relay::kOff);
-    while (ljoy->GetTrigger())
-      Wait(0.1);
+  if (ljoy->GetTrigger()) {
+    feeder->Set(1.0);
+    Wait(0.3);
+    feeder->Set(-1.0);
+    Wait(0.3);
+    feeder->Set(0.0);
+  } else if (ljoy->GetRawButton(6)) {
+    feeder->Set(1.0);
+  } else if (ljoy->GetRawButton(7)) {
+    feeder->Set(-1.0);
   } else {
-    feeder->Set(Relay::kOff);
+    feeder->Set(0.0);
   }
 }
 
