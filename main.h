@@ -26,9 +26,13 @@ class FrisBot : public IterativeRobot {
   Jaguar *feeder;
   Jaguar *tilter;
 
+  Relay *ledring;
+
   SmartDashboard *dash;
 
   float shooter_speed;
+  int ledring_state;
+  int done;
 
 public:
   FrisBot(void);
@@ -43,6 +47,7 @@ public:
   void DisabledContinuous(void);
   void AutonomousContinuous(void);
   void TeleopContinuous(void);
+  void feed(void);
 };
 
 #endif
