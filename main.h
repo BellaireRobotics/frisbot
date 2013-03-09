@@ -16,6 +16,10 @@
 */
 
 #define NORMALIZE(v) (-v + 1) / 2
+#define ON 1
+#define OFF 0
+#define RIGHT_HAND_DRIVE 0
+#define LEFT_HAND_DRIVE 1
 
 class FrisBot : public IterativeRobot {
   RobotDrive *drive;
@@ -30,6 +34,7 @@ class FrisBot : public IterativeRobot {
 
   SmartDashboard *dash;
 
+  int drivemode;
   float shooter_speed;
   int ledring_state;
   int done;

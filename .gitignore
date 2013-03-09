@@ -2,6 +2,7 @@
 .wrmakefile
 Makefile
 PPC603gnu
+*.swp
 
 # Object files
 *.o

@@ -28,8 +28,9 @@ void FrisBot::AutonomousInit(void) {
 }
 
 void FrisBot::TeleopInit(void) {
+  drivemode = LEFT_HAND_DRIVE;
   shooter_speed = 0.0;
-  ledring_state = 1;
+  ledring_state = ON;
 }
 
 void FrisBot::DisabledPeriodic(void) {
@@ -65,7 +66,22 @@ void FrisBot::AutonomousPeriodic(void) {
 }
 
 void FrisBot::TeleopPeriodic(void) {
-  drive->TankDrive(ljoy, rjoy, false);
+  // DriveMode Setter
+  if (ljoy->GetRawButton(11)) {
+    drivemode = RIGHT_HAND_DRIVE;
+  } else if (ljoy->GetRawButton(10)) {
+    drivemode = LEFT_HAND_DRIVE;
+  }
+
+  // Drive
+  //drive->TankDrive(ljoy, rjoy, true); // Old tank drive
+  if (drivemode == RIGHT_HAND_DRIVE) {
+    drive->ArcadeDrive(ljoy, Joystick::kDefaultYAxis, rjoy, Joystick::kDefaultXAxis);
+  } else if (drivemode == LEFT_HAND_DRIVE) {
+    drive->ArcadeDrive(rjoy, Joystick::kDefaultYAxis, ljoy, Joystick::kDefaultXAxis);
+  } else {
+    drive->ArcadeDrive(ljoy, Joystick::kDefaultYAxis, rjoy, Joystick::kDefaultXAxis);
+  }
 
   // Shooter
   if (rjoy->GetRawButton(8)) {
@@ -131,7 +147,6 @@ void FrisBot::AutonomousContinuous(void) {
 }
 
 void FrisBot::TeleopContinuous(void) {
-  // ...
 }
 
 void FrisBot::feed(void) {
